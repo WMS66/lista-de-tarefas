@@ -1,10 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./TodoList.css";
 import Icone from "./assets/icon.webp";
 
 function TodoList() {
-  const [lista, setLista] = useState([]);
+  const listaStorage = localStorage.getItem("Lista");
+
+  const [lista, setLista] = useState(
+    listaStorage ? JSON.parse(listaStorage) : []
+  );
   const [novoItem, setNovoItem] = useState([]);
+
+  useEffect(() => {
+    localStorage.setItem("Lista", JSON.stringify(lista));
+  }, [lista]);
 
   function adicionaItem(form) {
     form.preventDefault();
